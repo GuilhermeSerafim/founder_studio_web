@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link, Loader2 } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface ImportHeaderProps {
   importing: boolean;
@@ -59,6 +60,8 @@ const ImportHeader = React.memo(function ImportHeader({ importing, onImport }: I
           Importar
         </button>
       </div>
+
+      <ThemeToggle />
     </header>
   );
 });
