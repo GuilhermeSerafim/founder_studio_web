@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useState } from 'react';
+import React, { useReducer, useCallback, useState, useRef } from 'react';
 import { Layers, Quote, FileText } from 'lucide-react';
 import { studioReducer, initialState } from '@/reducers/studioReducer';
 import type { FormatType } from '@/types/studio';
@@ -6,12 +6,11 @@ import ImportHeader from './ImportHeader';
 import FormatSidebar from './FormatSidebar';
 import PostPreview from './PostPreview';
 import EditorPanel from './EditorPanel';
-import ExportFab from './ExportFab';
 import StudioToast from './StudioToast';
 
 const TWITTER_MOCK = {
   format: 'carousel' as FormatType,
-  profile: { name: 'Alex Hormozi', handle: 'AlexHormozi', photoUrl: null },
+  profile: { name: 'Alex Hormozi', handle: 'AlexHormozi', photoUrl: null, verified: true },
   carousel: {
     slides: [
       'A maioria dos founders falha porque tenta fazer 10 coisas ao mesmo tempo.\n\nFoque em UMA coisa. Domine. Depois expanda.',
@@ -23,7 +22,7 @@ const TWITTER_MOCK = {
 
 const INSTAGRAM_MOCK = {
   format: 'phrase' as FormatType,
-  profile: { name: 'Gary Vee', handle: 'garyvee', photoUrl: null },
+  profile: { name: 'Gary Vee', handle: 'garyvee', photoUrl: null, verified: true },
   phrase: { text: 'Pare de procurar atalhos. O atalho é o trabalho duro feito com consistência durante anos.' },
 };
 
@@ -39,6 +38,7 @@ export default function StudioDashboard() {
   const [state, dispatch] = useReducer(studioReducer, initialState);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [mobileTab, setMobileTab] = useState<MobileTab>('preview');
+  const previewCardRef = useRef<HTMLDivElement>(null);
 
   const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     setToast({ message, type });
@@ -86,14 +86,14 @@ export default function StudioDashboard() {
           <FormatSidebar selected={state.format} onSelect={handleFormatSelect} />
         </div>
 
-        {/* Preview */}
-        <div className="flex-1 overflow-y-auto">
-          <PostPreview state={state} />
+        {/* Editor */}
+        <div className="w-80 lg:w-[480px] xl:w-[600px] border-r border-border bg-background flex-shrink-0 overflow-y-auto">
+          <EditorPanel state={state} dispatch={dispatch} previewRef={previewCardRef} />
         </div>
 
-        {/* Editor */}
-        <div className="w-72 lg:w-80 border-l border-border bg-card flex-shrink-0 overflow-y-auto">
-          <EditorPanel state={state} dispatch={dispatch} />
+        {/* Preview */}
+        <div className="flex-1 overflow-y-auto bg-muted/20">
+          <PostPreview ref={previewCardRef} state={state} />
         </div>
       </div>
 
@@ -101,8 +101,8 @@ export default function StudioDashboard() {
       <div className="flex flex-col flex-1 md:hidden overflow-hidden">
         <div className="flex-1 overflow-y-auto">
           {mobileTab === 'formats' && <FormatSidebar selected={state.format} onSelect={(f) => { handleFormatSelect(f); setMobileTab('preview'); }} />}
-          {mobileTab === 'preview' && <PostPreview state={state} />}
-          {mobileTab === 'editor' && <EditorPanel state={state} dispatch={dispatch} />}
+          {mobileTab === 'preview' && <PostPreview ref={previewCardRef} state={state} />}
+          {mobileTab === 'editor' && <EditorPanel state={state} dispatch={dispatch} previewRef={previewCardRef} />}
         </div>
 
         {/* Mobile tab bar */}
@@ -123,7 +123,6 @@ export default function StudioDashboard() {
         </nav>
       </div>
 
-      <ExportFab state={state} onToast={(msg) => showToast(msg)} />
       <StudioToast
         message={toast?.message ?? null}
         type={toast?.type}
