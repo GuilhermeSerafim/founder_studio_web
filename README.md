@@ -1,73 +1,36 @@
-# Welcome to your Lovable project
+# Founder Studio — protótipo de editor visual
 
-## Project info
+Frontend de um editor de conteúdo para posts, com formatos, prévia e painel de edição. Usa React 18, TypeScript, Vite, Tailwind CSS e shadcn/ui, a partir de uma base Lovable.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Funcionalidades e limites
 
-## How can I edit this code?
+- `src/components/studio/StudioDashboard.tsx` organiza editor e prévia e mantém estado com reducer.
+- A importação de Instagram/Twitter é simulada: o código reconhece trechos da URL e carrega constantes locais após um temporizador. Não consulta essas redes nem importa o conteúdo real do link.
+- `src/pages/Login.tsx` navega para a tela inicial após uma espera, sem validar credenciais em backend. Essa tela é parte do protótipo, sem autenticação real nesse fluxo.
 
-There are several ways of editing your application.
+## Desenvolvimento local
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Com Node.js e npm instalados:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/GuilhermeSerafim/founder_studio_web.git
+cd founder_studio_web
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+O manifesto também define `npm run build`, `npm run lint`, `npm test`, `npm run test:watch` e `npm run preview`. Os testes usam Vitest. O protótipo não deve ser tratado como produto completo com integração social e autenticação; exportação e persistência também requerem validação funcional própria.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Base Lovable e opções de edição
 
-**Use GitHub Codespaces**
+O projeto usa a base [Lovable](https://lovable.dev/). É possível trabalhar localmente em uma IDE, editar arquivos no GitHub pelo botão de edição ou abrir um ambiente em Code → Codespaces → New codespace.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Para editar pelo Lovable, acesse o projeto correspondente na sua conta. A sincronização entre alterações no Lovable e commits no GitHub depende de uma integração configurada para este repositório. Um push local só será refletido na plataforma quando essa integração estiver ativa.
 
-## What technologies are used for this project?
+O guia original de ambiente também indica a [instalação de Node.js com nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
-This project is built with:
+## Publicação e domínio
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Em um projeto associado e configurado no Lovable, a opção Share → Publish permite preparar a publicação pela plataforma. A disponibilidade desse fluxo depende da conta e da integração do projeto.
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Para conectar um domínio ao projeto Lovable, consulte a documentação de [domínio personalizado](https://docs.lovable.dev/features/custom-domain#custom-domain), que descreve Project → Settings → Domains → Connect Domain.
